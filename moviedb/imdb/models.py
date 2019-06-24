@@ -17,7 +17,7 @@ class Movie(models.Model):
     year     = models.PositiveIntegerField()
     rating   = models.IntegerField(choices=RATINGS, default= NOT_RATED)
     runtime  = models.PositiveIntegerField()
-    website  = models.URLField(blank = True)
+    website  = models.URLField(blank = True) # it's varchar -200 by default
 
     def __str__(self):
         return '{} ({})'.format(self.title, self.year)
