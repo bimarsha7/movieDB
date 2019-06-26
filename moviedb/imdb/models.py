@@ -20,8 +20,8 @@ class Movie(models.Model):
     website  = models.URLField(blank = True) # it's varchar -200 by default
 
     class Meta:
-        ordering = ('-year', 'title')
-        
+        ordering = ('year', 'title') #ORDER BY year DESC year, title 
+
     def __str__(self):
         return '{} ({})'.format(self.title, self.year)
     
