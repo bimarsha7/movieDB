@@ -13,10 +13,10 @@
     crossorigin="anonymous"
   >
   <title >
-    {% block title %}MyMDB{% endblock %}
+    {% block title %}moviedb{% endblock %}
   </title>
   <style>
-    .mymdb-masthead {
+    .moviedb-masthead {
       background-color: #EEEEEE;
       margin-bottom: 1em;
     }
@@ -24,13 +24,13 @@
 
 </head >
 <body >
-<div class="mymdb-masthead">
+<div class="moviedb-masthead">
   <div class="container">
     <nav class="nav">
-      <div class="navbar-brand">MyMDB</div>
+      <div class="navbar-brand">moviedb</div>
       <a
         class="nav-link"
-        href="{% url 'core:MovieList' %}"
+        href="{% url 'imdb:MovieList' %}"
       >
         Movies
       </a>
@@ -40,11 +40,11 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-sm-8 mymdb-main">
+    <div class="col-sm-8 moviedb-main">
      {% block main %}{% endblock %}
     </div>
     <div
-        class="col-sm-3 offset-sm-1 mymdb-sidebar"
+        class="col-sm-3 offset-sm-1 moviedb-sidebar"
     >
       {% block sidebar %}{% endblock %}
     </div>
