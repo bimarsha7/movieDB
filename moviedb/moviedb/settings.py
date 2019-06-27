@@ -106,7 +106,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LOGIN_REDIRECT_URL = 'core:MovieList'
+LOGIN_REDIRECT_URL = 'imdb:MovieList'
+LOGIN_URL          = 'login'
+LOGOUT_URL         = 'logout'
 
 
 # Internationalization
