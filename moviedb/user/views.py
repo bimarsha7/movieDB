@@ -8,7 +8,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from .forms import sing_up_form
 
-def register(request):
+def signup(request):
     if request.method == 'POST':
         form = sing_up_form(request.POST)
         if form.is_valid():
