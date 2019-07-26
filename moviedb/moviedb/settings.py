@@ -126,3 +126,4 @@ STATIC_URL = '/static/'
 
 #email backend
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+LOGIN_REDIRECT_URL = 'imdb:MovieList'

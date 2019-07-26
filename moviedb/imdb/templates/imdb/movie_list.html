@@ -4,6 +4,13 @@
 All the movies
 {% endblock %}
 
+{% if user.is_authenticated %}
+  <p>Hi {{ user.username }} </p>
+{% else %}
+  <p>You are not logged in</p>
+  <a href="{% url 'user:login' %}">login</a>
+{% endif %}
+
 {%block main %}
     <ul>
         {% for movie in object_list %}

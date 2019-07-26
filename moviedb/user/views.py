@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect
 # from django.views.generic import CreateView
 
 from django.contrib import messages
-from .forms import sign_up_form
+from .forms import sign_up_form, login_form
 from  django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode,urlsafe_base64_decode
@@ -15,9 +15,9 @@ from user.tokens import account_activation_token
 from django.core.mail import EmailMessage
 from django.http import HttpResponse
 from django.contrib.auth.models import User
-from django.contrib.auth import login
+from django.contrib.auth import authenticate, login
 
-def signup(request):
+def user_signup(request):
     if request.method == 'POST':
         form = sign_up_form(request.POST)
         if form.is_valid():
@@ -60,6 +60,32 @@ def activate(request, uidb64, token):
         return redirect('imdb:MovieList')
     else:
         return HttpResponse("Activation link is Invalid...!!!")
+# ======================================================================================================
+
+def user_login(request):
+    if request.method == 'POST':
+        form = login_form(request.POST)
+        if form.is_valid():
+            user_n = form.cleaned_data.get('username')
+            user_p = form.cleaned_data.get('password')
+            user = authenticate(request,username= user_n,password=user_p)
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    return HttpResponse('Authenticated successfully')
+                else:
+                    return HttpResponse('Disabled account')
+            else:
+                return HttpResponse("Invalid login. Sign up before logging in.")
+    else:
+        form = login_form()
+    return render(request, 'user/login.html', {'form': form})
+
+
+
+
+
+
 
 
 

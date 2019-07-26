@@ -3,6 +3,11 @@
 {% block main %}
 <h1>Register for Movie Data Base (MDB)</h1>
 
+{%block nav_link %}
+{% endblock %}
+<p> Already signed up? <a href="{% url 'user:login' %}">Log In</a></p>
+
+
 <form method = "post">
     {{ form.as_p}}
     {% csrf_token %}

@@ -23,3 +23,7 @@ class sign_up_form(UserCreationForm):
         if r.count():
             raise ValidationError('Username already exist. Try another one')
         return username
+
+class login_form(forms.Form):
+    username = forms.CharField(label="Username", max_length=150)
+    password = forms.CharField(label="Password" , widget = forms.PasswordInput)
