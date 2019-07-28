@@ -1,3 +1,4 @@
 django==2.2
 psycopg2-binary
 djangorestframework==3.8
+pillow==6.1.0
