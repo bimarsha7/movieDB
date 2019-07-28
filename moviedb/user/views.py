@@ -95,7 +95,7 @@ def edit(self):
     else:
         user_form = user_edit_form(instance=request.user)
         profile_form = profile_edit_form(instance=request.user.profile)
-    return render(request,'user/edit.html',{'user_form': user_form,'profile_form': profile_form}
+    return render(request,'user/edit.html',{'user_form': user_form,'profile_form': profile_form})
 
 
 
