@@ -6,7 +6,8 @@ from django.shortcuts import render, redirect
 # from django.views.generic import CreateView
 
 from django.contrib import messages
-from .forms import sign_up_form, login_form
+from .forms import sign_up_form, login_form,user_edit_form, profile_edit_form
+from .models import user_profile
 from  django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode,urlsafe_base64_decode
@@ -24,6 +25,7 @@ def user_signup(request):
             user = form.save(commit=False)
             user.is_active = False
             user.save()
+            user_profile.objects.create(user=user)
             current_site = get_current_site(request)
             subject = "Activate your MovieDB account"
             # username = form.cleaned_data.get('username')
@@ -80,6 +82,20 @@ def user_login(request):
     else:
         form = login_form()
     return render(request, 'user/login.html', {'form': form})
+# ========================================================================================================
+
+@login_required #use the login_required decorator because users have to be authenticated to edit their profile
+def edit(self):
+    if request.method == 'POST':
+        user_form = user_edit_form(instance=request.user,data=request.POST)
+        profile_form = profile_edit_form(instance=request.user.profile,data=request.POST,files=request.FILES)
+    if user_form.is_valid() and profile_form.is_valid():
+        user_form.save()
+        profile_form.save()
+    else:
+        user_form = user_edit_form(instance=request.user)
+        profile_form = profile_edit_form(instance=request.user.profile)
+    return render(request,'user/edit.html',{'user_form': user_form,'profile_form': profile_form}
 
 
 
