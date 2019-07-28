@@ -126,4 +126,10 @@ STATIC_URL = '/static/'
 
 #email backend
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-LOGIN_REDIRECT_URL = 'imdb:MovieList'
+LOGIN_REDIRECT_URL = 'user:dashboard'
+
+#media files
+# MEDIA_URL is the base URL to serve the media files uploaded by users,
+# and MEDIA_ROOT is the local path where they reside.
+MEDIA_URL= '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
