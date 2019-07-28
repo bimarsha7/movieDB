@@ -12,4 +12,5 @@ urlpatterns = [
     # url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
     #     user_views.activate, name='activate'),
     path('activate/<slug:uidb64>/<slug:token>', user_views.activate, name='activate'),
+    path('edit/', user_views.edit, name='edit'),
 ]
