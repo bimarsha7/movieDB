@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
-from .models import user_profile
+from .models import Profile
 
 class sign_up_form(UserCreationForm):
     email = forms.EmailField(label="Email", max_length=150)
@@ -41,6 +41,6 @@ class user_edit_form(forms.ModelForm):
 # their date of birth and upload a picture for their profile.
 class profile_edit_form(forms.ModelForm):
     class Meta:
-        model = user_profile
+        model = Profile
         fields = ('date_of_birth', 'photo')
     
