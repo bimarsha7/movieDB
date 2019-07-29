@@ -7,7 +7,6 @@
 {% endblock %}
 <p> Already signed up? <a href="{% url 'user:login' %}">Log In</a></p>
 
-
 <form method = "post">
     {{ form.as_p}}
     {% csrf_token %}
