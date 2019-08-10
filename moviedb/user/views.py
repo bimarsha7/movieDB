@@ -16,7 +16,7 @@ from user.tokens import account_activation_token
 from django.core.mail import EmailMessage
 from django.http import HttpResponse
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.views.generic import TemplateView
 from django.urls import reverse_lazy
@@ -109,8 +109,11 @@ class dashboard(TemplateView):
     template_name='user/dashboard.html'
     success_url = reverse_lazy('user:edit')
 
+# ====================================================================================================
 
-
+def user_logout(request):
+    logout(request)
+    return redirect('user:login')
 
 
 
