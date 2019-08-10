@@ -6,7 +6,8 @@ from django.shortcuts import render, redirect
 # from django.views.generic import CreateView
 
 from django.contrib import messages
-from .forms import sign_up_form, login_form
+from .forms import sign_up_form, login_form,user_edit_form, profile_edit_form
+from .models import Profile
 from  django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode,urlsafe_base64_decode
@@ -15,7 +16,11 @@ from user.tokens import account_activation_token
 from django.core.mail import EmailMessage
 from django.http import HttpResponse
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.views.generic import TemplateView
+from django.urls import reverse_lazy
+from django.utils.translation import gettext as _
 
 def user_signup(request):
     if request.method == 'POST':
@@ -24,6 +29,7 @@ def user_signup(request):
             user = form.save(commit=False)
             user.is_active = False
             user.save()
+            Profile.objects.create(user=user)
             current_site = get_current_site(request)
             subject = "Activate your MovieDB account"
             # username = form.cleaned_data.get('username')
@@ -80,12 +86,34 @@ def user_login(request):
     else:
         form = login_form()
     return render(request, 'user/login.html', {'form': form})
+# ========================================================================================================
 
+@login_required #use the login_required decorator because users have to be authenticated to edit their profile
+def edit(request):
+    if request.method == 'POST':
+        user_form = user_edit_form(request.POST, instance=request.user)
+        profile_form = profile_edit_form(request.POST, instance=request.user.profile,files=request.FILES)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request, _('Congratulation.Your profile was successfully update.'))
+        else:
+            messages.error(request, _('Please correct the erros.'))   
+    else:
+        user_form = user_edit_form(instance=request.user)
+        profile_form = profile_edit_form(instance=request.user.profile)
+    return render(request,'user/edit.html',{'user_form': user_form,'profile_form': profile_form})
+# ==========================================================================================================
 
+class dashboard(TemplateView):
+    template_name='user/dashboard.html'
+    success_url = reverse_lazy('user:edit')
 
+# ====================================================================================================
 
-
-
+def user_logout(request):
+    logout(request)
+    return redirect('user:login')
 
 
 

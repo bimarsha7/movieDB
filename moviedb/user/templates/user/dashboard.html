@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block main %}
+
+{% if user.is_authenticated %}
+  Hi {{ user.username }}!
+  <p><a href= "{% url 'user:logout' %}">Logout</a></p>
+{% else %}
+  <p>You are not logged in</p>
+  <a href="{% url 'user:login' %}">login</a>
+{% endif %}
+
+<p>Welcome to your dashboard. 
+  You can <a href="{% url 'user:edit' %}">edit your profile</a> 
+</p>
+
+{% endblock %}
